@@ -1,6 +1,8 @@
 #define MAX_COLS 71
 #define FILE_MAX_LINES 27
 
+// More about game of life: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+
 /*
  * Function: cell_lives
  * ----------------------------
@@ -72,8 +74,8 @@ int get_cell(const int world[][MAX_COLS + 2], int row, int col);
  * rule: life game rule -> {maxNeighbors, minNeighbors, neighborsToBorn}
  */
 void update_world(
-    int world[][MAX_COLS + 2], int rows_count, int cols_count,
-    int world_aux[][MAX_COLS + 2], const int rule[3]);
+	int world[][MAX_COLS + 2], int rows_count, int cols_count,
+	int world_aux[][MAX_COLS + 2], const int rule[3]);
 
 /*
  * Function: update_world_n_generations
@@ -88,8 +90,8 @@ void update_world(
  * rule: life game rule -> {maxNeighbors, minNeighbors, neighborsToBorn}
  */
 void update_world_n_generations(
-    int n, int world[][MAX_COLS + 2], int rows_count, int cols_count,
-    int world_aux[][MAX_COLS + 2], const int rule[3]);
+	int n, int world[][MAX_COLS + 2], int rows_count, int cols_count,
+	int world_aux[][MAX_COLS + 2], const int rule[3]);
 
 /*
  * Function: shows_world
