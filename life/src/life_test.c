@@ -126,7 +126,7 @@ int main(void)
 	// Testing write_world
 
 	puts("\nTesting write_world");
-	write_world(test_world, 11, 11, "mundo_escrito.txt");
+	write_world(test_world, 11, 11, "../docs/life_test_output/wrote_world.txt");
 
 	// -------------------------------------------------------------------------------
 	// Testing read_world
@@ -139,7 +139,7 @@ int main(void)
 	// Where the read world virtual size will be saved
 	int read_world_size[2];
 
-	read_world(world_read, read_world_size, "mundo_escrito.txt");
+	read_world(world_read, read_world_size, "../docs/life_test_output/wrote_world.txt");
 
 	// Confirming if read_world_size is correct
 	int rows_read = read_world_size[0];
@@ -157,8 +157,7 @@ int main(void)
 
 	int aux_world[13][MAX_COLS + 2];
 
-	int iterations;
-	for (iterations = 1; iterations <= 5; iterations++)
+	for (int iterations = 1; iterations <= 5; iterations++)
 	{
 		update_world(test_world, 11, 11, aux_world, rule);
 		puts("");
