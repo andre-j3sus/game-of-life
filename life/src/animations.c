@@ -27,13 +27,13 @@ void animate_world(int n, int world[][MAX_COLS + 2],
 {
 	system("CLS"); // CLear Screen em Windows
 
-	shows_world(world, rows_count, cols_count);
+	print_world(world, rows_count, cols_count);
 
 	for (int i = 0; i < n; i++)
 	{
 		delays(delay_in_seconds);
 		system("CLS");
 		update_world(world, rows_count, cols_count, aux_world, rule);
-		shows_world(world, rows_count, cols_count);
+		print_world(world, rows_count, cols_count);
 	}
 }

@@ -58,7 +58,7 @@ int main(void)
 		puts("cell_lives sub7 failed");
 
 	// -------------------------------------------------------------------------------
-	// Testing init_world
+	// Testing clear_world
 
 	// World with virtual size 3 x 5 and effective size 5 x 7
 	int small_world[][MAX_COLS + 2] =
@@ -68,12 +68,12 @@ int main(void)
 		 {0, 1, 1, 1, 1, 1, 0},	 // idem
 		 {0, 0, 0, 0, 0, 0, 0}}; // idem
 
-	init_world(small_world, 3, 5);
+	clear_world(small_world, 3, 5);
 	int row, col;
 	for (row = 1; row <= 3; row++)
 		for (col = 1; col <= 5; col++)
 			if (small_world[row][col] != 0)
-				puts("init_world failed");
+				puts("clear_world failed");
 
 	// -------------------------------------------------------------------------------
 	// Testing set_cell
@@ -117,10 +117,10 @@ int main(void)
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
 	// -------------------------------------------------------------------------------
-	// Testing shows_world
+	// Testing print_world
 
-	puts("\nTesting shows_world");
-	shows_world(test_world, 11, 11);
+	puts("\nTesting print_world");
+	print_world(test_world, 11, 11);
 
 	// -------------------------------------------------------------------------------
 	// Testing write_world
@@ -131,7 +131,7 @@ int main(void)
 	// -------------------------------------------------------------------------------
 	// Testing read_world
 
-	puts("\nTesting read_world with shows_world");
+	puts("\nTesting read_world with print_world");
 
 	// Where the read world will be saved
 	int world_read[FILE_MAX_LINES + 2][MAX_COLS + 2];
@@ -148,12 +148,12 @@ int main(void)
 		puts("read_world failed in read_world_size");
 
 	// Confirming if world_read is correct
-	shows_world(world_read, 11, 11);
+	print_world(world_read, 11, 11);
 
 	// -------------------------------------------------------------------------------
 	// Testing update_world
 
-	puts("\nTesting update_world with shows_world");
+	puts("\nTesting update_world with print_world");
 
 	int aux_world[13][MAX_COLS + 2];
 
@@ -161,17 +161,17 @@ int main(void)
 	{
 		update_world(test_world, 11, 11, aux_world, rule);
 		puts("");
-		shows_world(test_world, 11, 11);
+		print_world(test_world, 11, 11);
 	}
 
 	// -------------------------------------------------------------------------------
 	// Testing update_world_n_generations
 
-	puts("\nTesting update_world_n_generations with shows_world");
+	puts("\nTesting update_world_n_generations with print_world");
 	puts("\n5 Iterations");
 
 	// Redo test_world
-	init_world(test_world, 11, 11);
+	clear_world(test_world, 11, 11);
 	for (row = 3; row <= 9; row++)
 		set_cell(test_world, row, 6, 1);
 	for (col = 3; col <= 9; col++)
@@ -179,7 +179,7 @@ int main(void)
 
 	update_world_n_generations(5, test_world, 11, 11, aux_world, rule);
 	puts("");
-	shows_world(test_world, 11, 11);
+	print_world(test_world, 11, 11);
 
 	return 0;
 }

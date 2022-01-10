@@ -23,7 +23,7 @@ int cell_lives(const int submatrix[3][3], const int rule[3])
 		   (cell == 0 && live_cells == rule[2]);
 }
 
-void init_world(int world[][MAX_COLS + 2], int rows_count, int cols_count)
+void clear_world(int world[][MAX_COLS + 2], int rows_count, int cols_count)
 {
 	if (cols_count > MAX_COLS || rows_count < 2 || cols_count < 2)
 		return;
@@ -45,6 +45,19 @@ void set_cell(int world[][MAX_COLS + 2], int row, int col, int value)
 int get_cell(const int world[][MAX_COLS + 2], int row, int col)
 {
 	return world[row][col];
+}
+
+void copy_world(
+	int world1[][MAX_COLS + 2], int rows_count, int cols_count,
+	int world2[][MAX_COLS + 2])
+{
+	for (size_t row = 1; row < rows_count + 1; row++)
+	{
+		for (size_t col = 1; col < cols_count + 1; col++)
+		{
+			world1[row][col] = world2[row][col];
+		}
+	}
 }
 
 void update_world(
@@ -83,14 +96,11 @@ void update_world(
 			submatrix[2][1] = get_cell(world, pos_row, col);
 			submatrix[2][2] = get_cell(world, pos_row, pos_col);
 
-			if (cell_lives(submatrix, rule))
-				set_cell(world_aux, row, col, 1);
-			else
-				set_cell(world_aux, row, col, 0);
+			set_cell(world_aux, row, col, cell_lives(submatrix, rule));
 		}
 	}
 
-	world = world_aux;
+	copy_world(world, rows_count, cols_count, world_aux);
 }
 
 void update_world_n_generations(
@@ -108,45 +118,41 @@ void update_world_n_generations(
 	}
 }
 
-void shows_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count)
+void fprint_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count, FILE *__restrict__ __stream)
 {
 	for (size_t row = 1; row < rows_count + 1; row++)
 	{
 		for (size_t col = 1; col < cols_count + 1; col++)
 		{
-			printf((world[row][col]) ? "X " : ". ");
-			if (col == cols_count)
-				putchar('\n');
+			fputs((world[row][col]) ? "X " : ". ", __stream);
 		}
+		fputc('\n', __stream);
 	}
+}
+
+void print_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count)
+{
+	fprint_world(world, rows_count, cols_count, stdout);
 }
 
 void write_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count, const char *filename)
 {
-	FILE *fptr = fopen(filename, "w");
-	if (fptr == NULL)
+	FILE *file = fopen(filename, "w");
+	if (file == NULL)
 	{
 		printf("Error!\n");
-		exit(1);
+		exit(-1);
 	}
 
-	for (size_t row = 1; row < rows_count + 1; row++)
-	{
-		for (size_t col = 1; col < cols_count + 1; col++)
-		{
-			fputs((world[row][col]) ? "X " : ". ", fptr);
-			if (col == cols_count)
-				fputc('\n', fptr);
-		}
-	}
+	fprint_world(world, rows_count, cols_count, file);
 
-	fclose(fptr);
+	fclose(file);
 }
 
 void read_world(int world[FILE_MAX_LINES + 2][MAX_COLS + 2], int world_size[2], const char *filename)
 {
-	FILE *fptr = fopen(filename, "r");
-	if (fptr == NULL)
+	FILE *file = fopen(filename, "r");
+	if (file == NULL)
 	{
 		printf("Error!\n");
 		exit(1);
@@ -155,24 +161,27 @@ void read_world(int world[FILE_MAX_LINES + 2][MAX_COLS + 2], int world_size[2], 
 	int row = 1;
 	int col = 1;
 
-	for (char c = getc(fptr); c != EOF; c = getc(fptr))
+	for (char c = getc(file); c != EOF; c = getc(file))
 	{
-		if (c == '\n')
+		switch (c)
 		{
+		case '\n':
 			if (row == 1)
 				world_size[1] = col - 1;
 
 			row++;
 			col = 1;
-			continue;
+			break;
+		case '.':
+		case 'X':
+			set_cell(world, row, col++, c == 'X');
+			break;
+		default:
+			break;
 		}
-		if (c == '.')
-			set_cell(world, row, col++, 0);
-		else if (c == 'X')
-			set_cell(world, row, col++, 1);
 	}
 
 	world_size[0] = row - 1;
 
-	fclose(fptr);
+	fclose(file);
 }

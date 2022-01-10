@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #define MAX_COLS 71
 #define FILE_MAX_LINES 27
 
@@ -23,7 +25,7 @@
 int cell_lives(const int submatrix[3][3], const int rule[3]);
 
 /*
- * Function: init_world
+ * Function: clear_world
  * ----------------------------
  * Initializes a world with dead cells and size rows_count x cols_count.
  *
@@ -31,7 +33,7 @@ int cell_lives(const int submatrix[3][3], const int rule[3]);
  * rows_count: number of rows
  * cols_count: number of columns
  */
-void init_world(int world[][MAX_COLS + 2], int rows_count, int cols_count);
+void clear_world(int world[][MAX_COLS + 2], int rows_count, int cols_count);
 
 /*
  * Function: set_cell
@@ -55,6 +57,20 @@ void set_cell(int world[][MAX_COLS + 2], int row, int col, int value);
  * col: cell column
  */
 int get_cell(const int world[][MAX_COLS + 2], int row, int col);
+
+/*
+ * Function: copy_world
+ * ----------------------------
+ * Copies the world2 to the world1.
+ * 
+ * world1: matrix of 0s and 1s
+ * rows_count: number of rows
+ * cols_count: number of columns
+ * world2: world to copy
+ */
+void copy_world(
+	int world1[][MAX_COLS + 2], int rows_count, int cols_count,
+	int world2[][MAX_COLS + 2]);
 
 /*
  * Function: update_world
@@ -94,7 +110,22 @@ void update_world_n_generations(
 	int world_aux[][MAX_COLS + 2], const int rule[3]);
 
 /*
- * Function: shows_world
+ * Function: fprint_world
+ * ----------------------------
+ * Prints the world in a STREAM.
+ * 
+ * - dead cell (0) is represented by ". "
+ * - live cell (1) is represented by "X "
+ *
+ * world: matrix of 0s and 1s
+ * rows_count: number of rows
+ * cols_count: number of columns
+ * __stream: FILE object that identifies the stream where the world is to be written
+ */
+void fprint_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count, FILE *__restrict__ __stream);
+
+/*
+ * Function: print_world
  * ----------------------------
  * Shows the world in the standart output.
  * 
@@ -105,7 +136,7 @@ void update_world_n_generations(
  * rows_count: number of rows
  * cols_count: number of columns
  */
-void shows_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count);
+void print_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count);
 
 /*
  * Function: write_world
