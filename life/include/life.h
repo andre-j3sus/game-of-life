@@ -1,6 +1,10 @@
+#pragma once
+
 #include <stdio.h>
 
-#define MAX_COLS 71
+#define RULE_SIZE 3
+#define VIRTUAL_MAX_COLS 71
+#define MAX_COLS VIRTUAL_MAX_COLS + 2
 #define FILE_MAX_LINES 27
 
 // More about game of life: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
@@ -22,7 +26,7 @@
  *
  * returns: 1 (true) if the cell lives in the next generation; otherwise returns 0 (false)
  */
-int cell_lives(const int submatrix[3][3], const int rule[3]);
+int cell_lives(const int submatrix[3][3], const int rule[RULE_SIZE]);
 
 /*
  * Function: clear_world
@@ -33,7 +37,7 @@ int cell_lives(const int submatrix[3][3], const int rule[3]);
  * rows_count: number of rows
  * cols_count: number of columns
  */
-void clear_world(int world[][MAX_COLS + 2], int rows_count, int cols_count);
+void clear_world(int world[][MAX_COLS], int rows_count, int cols_count);
 
 /*
  * Function: set_cell
@@ -45,7 +49,7 @@ void clear_world(int world[][MAX_COLS + 2], int rows_count, int cols_count);
  * col: cell column
  * value: value to set
  */
-void set_cell(int world[][MAX_COLS + 2], int row, int col, int value);
+void set_cell(int world[][MAX_COLS], int row, int col, int value);
 
 /*
  * Function: get_cell
@@ -56,7 +60,7 @@ void set_cell(int world[][MAX_COLS + 2], int row, int col, int value);
  * row: cell row
  * col: cell column
  */
-int get_cell(const int world[][MAX_COLS + 2], int row, int col);
+int get_cell(const int world[][MAX_COLS], int row, int col);
 
 /*
  * Function: copy_world
@@ -69,8 +73,8 @@ int get_cell(const int world[][MAX_COLS + 2], int row, int col);
  * world2: world to copy
  */
 void copy_world(
-	int world1[][MAX_COLS + 2], int rows_count, int cols_count,
-	int world2[][MAX_COLS + 2]);
+	int world1[][MAX_COLS], int rows_count, int cols_count,
+	int world2[][MAX_COLS]);
 
 /*
  * Function: update_world
@@ -90,8 +94,8 @@ void copy_world(
  * rule: life game rule -> {maxNeighbors, minNeighbors, neighborsToBorn}
  */
 void update_world(
-	int world[][MAX_COLS + 2], int rows_count, int cols_count,
-	int world_aux[][MAX_COLS + 2], const int rule[3]);
+	int world[][MAX_COLS], int rows_count, int cols_count,
+	int world_aux[][MAX_COLS], const int rule[RULE_SIZE]);
 
 /*
  * Function: update_world_n_generations
@@ -106,8 +110,8 @@ void update_world(
  * rule: life game rule -> {maxNeighbors, minNeighbors, neighborsToBorn}
  */
 void update_world_n_generations(
-	int n, int world[][MAX_COLS + 2], int rows_count, int cols_count,
-	int world_aux[][MAX_COLS + 2], const int rule[3]);
+	int n, int world[][MAX_COLS], int rows_count, int cols_count,
+	int world_aux[][MAX_COLS], const int rule[RULE_SIZE]);
 
 /*
  * Function: fprint_world
@@ -122,7 +126,7 @@ void update_world_n_generations(
  * cols_count: number of columns
  * __stream: FILE object that identifies the stream where the world is to be written
  */
-void fprint_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count, FILE *__restrict__ __stream);
+void fprint_world(const int world[][MAX_COLS], int rows_count, int cols_count, FILE *__restrict__ __stream);
 
 /*
  * Function: print_world
@@ -136,7 +140,7 @@ void fprint_world(const int world[][MAX_COLS + 2], int rows_count, int cols_coun
  * rows_count: number of rows
  * cols_count: number of columns
  */
-void print_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count);
+void print_world(const int world[][MAX_COLS], int rows_count, int cols_count);
 
 /*
  * Function: write_world
@@ -151,7 +155,7 @@ void print_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count
  * cols_count: number of columns
  * filename: name of the file
  */
-void write_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count, const char *filename);
+void write_world(const int world[][MAX_COLS], int rows_count, int cols_count, const char *filename);
 
 /*
  * Function: read_world
@@ -165,4 +169,4 @@ void write_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count
  * world_size: size of the world -> {rows_count, cols_count}
  * filename: path to the file
  */
-void read_world(int world[FILE_MAX_LINES + 2][MAX_COLS + 2], int world_size[2], const char *filename);
+void read_world(int world[FILE_MAX_LINES + 2][MAX_COLS], int world_size[2], const char *filename);

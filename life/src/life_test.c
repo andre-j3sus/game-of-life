@@ -6,7 +6,7 @@
  */
 int main(void)
 {
-	int rule[3] = {3, 2, 3}; // Default rule
+	int rule[RULE_SIZE] = {3, 2, 3}; // Default rule
 
 	// -------------------------------------------------------------------------------
 	// Testing cell_lives with rule = {3, 2, 3}
@@ -61,7 +61,7 @@ int main(void)
 	// Testing clear_world
 
 	// World with virtual size 3 x 5 and effective size 5 x 7
-	int small_world[][MAX_COLS + 2] =
+	int small_world[][MAX_COLS] =
 		{{0, 0, 0, 0, 0, 0, 0},	 // Rest of the line with 0s
 		 {0, 1, 1, 1, 1, 1, 0},	 // idem
 		 {0, 1, 1, 1, 1, 1, 0},	 // idem
@@ -101,7 +101,7 @@ int main(void)
 	// Creating new world for tests
 
 	// World with virtual size 11 x 11 and effective size 13 x 13
-	int test_world[13][MAX_COLS + 2] =
+	int test_world[13][MAX_COLS] =
 		{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Rest of the line with 0s
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // idem
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // etc...
@@ -134,7 +134,7 @@ int main(void)
 	puts("\nTesting read_world with print_world");
 
 	// Where the read world will be saved
-	int world_read[FILE_MAX_LINES + 2][MAX_COLS + 2];
+	int world_read[FILE_MAX_LINES + 2][MAX_COLS];
 
 	// Where the read world virtual size will be saved
 	int read_world_size[2];
@@ -155,7 +155,7 @@ int main(void)
 
 	puts("\nTesting update_world with print_world");
 
-	int aux_world[13][MAX_COLS + 2];
+	int aux_world[13][MAX_COLS];
 
 	for (int iterations = 1; iterations <= 5; iterations++)
 	{

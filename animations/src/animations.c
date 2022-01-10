@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "animations.h"
+#include "life.h"
 
 /*
  * Function: delays
@@ -20,19 +21,19 @@ void delays(double delay_in_seconds)
 		;
 }
 
-void animate_world(int n, int world[][MAX_COLS + 2],
+void animate_world(int n, int world[][VIRTUAL_MAX_COLS + 2],
 				   int rows_count, int cols_count,
-				   int aux_world[][MAX_COLS + 2],
-				   const int rule[3], double delay_in_seconds)
+				   int aux_world[][MAX_COLS],
+				   const int rule[RULE_SIZE], double delay_in_seconds)
 {
-	system("CLS"); // CLear Screen em Windows
+	system("clear"); // CLear Screen in Unix
 
 	print_world(world, rows_count, cols_count);
 
 	for (int i = 0; i < n; i++)
 	{
 		delays(delay_in_seconds);
-		system("CLS");
+		system("clear");
 		update_world(world, rows_count, cols_count, aux_world, rule);
 		print_world(world, rows_count, cols_count);
 	}

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "animations.h"
+#include "life.h"
 
 /*
  * Game of life entry point.
@@ -9,24 +10,24 @@ int main()
 {
 	int rule[3] = {3, 2, 3}; // Default rule
 
-	int world_read[FILE_MAX_LINES + 2][MAX_COLS + 2];
+	int world_read[FILE_MAX_LINES + 2][MAX_COLS];
 	int world_read_size[2];
 
-	int aux_world[FILE_MAX_LINES + 2][MAX_COLS + 2];
+	int aux_world[FILE_MAX_LINES + 2][MAX_COLS];
 
 	int n;
 	double delay_in_seconds;
-	char filename[35];
+	char filename[40];
 
 	puts("File name (max 34 chars)");
 	printf("%s", "or insert ENTER: ");
 
-	fgets(filename, 35, stdin);
+	fgets(filename, 39, stdin);
 	filename[strlen(filename) - 1] = '\0';
 	if (strcmp(filename, "") == 0)
 	{
-		strcpy(filename, "seis_barras.txt");
-		puts("The seis_barras.txt will be used.");
+		strcpy(filename, "../docs/initial_worlds/six_bars.txt");
+		puts("The six_bars.txt will be used.");
 	}
 
 	printf("%s", "Number of iterations: ");

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "life.h"
 
 /*
@@ -14,7 +16,7 @@
  * delay_in_seconds: seconds between animation transition
  */
 void animate_world(
-	int n, int world[][MAX_COLS + 2],
+	int n, int world[][MAX_COLS],
 	int rows_count, int cols_count,
-	int aux_world[][MAX_COLS + 2],
-	const int rule[3], double delay_in_seconds);
+	int aux_world[][MAX_COLS],
+	const int rule[RULE_SIZE], double delay_in_seconds);

@@ -13,4 +13,4 @@ TARGETS = life_test
 all: ${TARGETS}
 
 life_test:
-	${CC} ${CFLAGS} ${SRC_FILES} -o ${BUILD_DIR}/$@ && ./build/life_test
+	${CC} ${CFLAGS} ${SRC_FILES} -o ${BUILD_DIR}/$@ && ./${BUILD_DIR}/$@

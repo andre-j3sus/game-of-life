@@ -3,7 +3,7 @@
 #include <string.h>
 #include "life.h"
 
-int cell_lives(const int submatrix[3][3], const int rule[3])
+int cell_lives(const int submatrix[3][3], const int rule[RULE_SIZE])
 {
 	int cell = submatrix[1][1];
 	int live_cells = 0;
@@ -23,9 +23,9 @@ int cell_lives(const int submatrix[3][3], const int rule[3])
 		   (cell == 0 && live_cells == rule[2]);
 }
 
-void clear_world(int world[][MAX_COLS + 2], int rows_count, int cols_count)
+void clear_world(int world[][MAX_COLS], int rows_count, int cols_count)
 {
-	if (cols_count > MAX_COLS || rows_count < 2 || cols_count < 2)
+	if (cols_count > VIRTUAL_MAX_COLS || rows_count < 2 || cols_count < 2)
 		return;
 
 	for (size_t row = 1; row < rows_count + 1; row++)
@@ -37,19 +37,19 @@ void clear_world(int world[][MAX_COLS + 2], int rows_count, int cols_count)
 	}
 }
 
-void set_cell(int world[][MAX_COLS + 2], int row, int col, int value)
+void set_cell(int world[][MAX_COLS], int row, int col, int value)
 {
 	world[row][col] = value;
 }
 
-int get_cell(const int world[][MAX_COLS + 2], int row, int col)
+int get_cell(const int world[][MAX_COLS], int row, int col)
 {
 	return world[row][col];
 }
 
 void copy_world(
-	int world1[][MAX_COLS + 2], int rows_count, int cols_count,
-	int world2[][MAX_COLS + 2])
+	int world1[][MAX_COLS], int rows_count, int cols_count,
+	int world2[][MAX_COLS])
 {
 	for (size_t row = 1; row < rows_count + 1; row++)
 	{
@@ -61,9 +61,9 @@ void copy_world(
 }
 
 void update_world(
-	int world[][MAX_COLS + 2],
+	int world[][MAX_COLS],
 	int rows_count, int cols_count,
-	int world_aux[][MAX_COLS + 2], const int rule[3])
+	int world_aux[][MAX_COLS], const int rule[RULE_SIZE])
 {
 	for (size_t row = 1; row < rows_count + 1; row++)
 	{
@@ -104,10 +104,10 @@ void update_world(
 }
 
 void update_world_n_generations(
-	int n, int world[][MAX_COLS + 2],
+	int n, int world[][MAX_COLS],
 	int rows_count, int cols_count,
-	int world_aux[][MAX_COLS + 2],
-	const int rule[3])
+	int world_aux[][MAX_COLS],
+	const int rule[RULE_SIZE])
 {
 	if (n <= 0)
 		return;
@@ -118,7 +118,7 @@ void update_world_n_generations(
 	}
 }
 
-void fprint_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count, FILE *__restrict__ __stream)
+void fprint_world(const int world[][MAX_COLS], int rows_count, int cols_count, FILE *__restrict__ __stream)
 {
 	for (size_t row = 1; row < rows_count + 1; row++)
 	{
@@ -130,12 +130,12 @@ void fprint_world(const int world[][MAX_COLS + 2], int rows_count, int cols_coun
 	}
 }
 
-void print_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count)
+void print_world(const int world[][MAX_COLS], int rows_count, int cols_count)
 {
 	fprint_world(world, rows_count, cols_count, stdout);
 }
 
-void write_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count, const char *filename)
+void write_world(const int world[][MAX_COLS], int rows_count, int cols_count, const char *filename)
 {
 	FILE *file = fopen(filename, "w");
 	if (file == NULL)
@@ -149,7 +149,7 @@ void write_world(const int world[][MAX_COLS + 2], int rows_count, int cols_count
 	fclose(file);
 }
 
-void read_world(int world[FILE_MAX_LINES + 2][MAX_COLS + 2], int world_size[2], const char *filename)
+void read_world(int world[FILE_MAX_LINES + 2][MAX_COLS], int world_size[2], const char *filename)
 {
 	FILE *file = fopen(filename, "r");
 	if (file == NULL)
