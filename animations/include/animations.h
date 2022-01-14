@@ -19,4 +19,4 @@ void animate_world(
 	int n, int world[][MAX_COLS],
 	int rows_count, int cols_count,
 	int aux_world[][MAX_COLS],
-	const int rule[RULE_SIZE], double delay_in_seconds);
+	const int rule[RULE_SIZE], int delay_in_seconds);

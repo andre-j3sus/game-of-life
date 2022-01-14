@@ -16,11 +16,10 @@ int main()
 	int aux_world[FILE_MAX_LINES + 2][MAX_COLS];
 
 	int n;
-	double delay_in_seconds;
+	int delay_in_seconds;
 	char filename[40];
 
-	puts("File name (max 34 chars)");
-	printf("%s", "or insert ENTER: ");
+	printf("\nFile path (max 34 chars) or insert ENTER: ");
 
 	fgets(filename, 39, stdin);
 	filename[strlen(filename) - 1] = '\0';
@@ -30,10 +29,10 @@ int main()
 		puts("The six_bars.txt will be used.");
 	}
 
-	printf("%s", "Number of iterations: ");
+	printf("\nNumber of iterations: ");
 	scanf("%d", &n);
-	printf("%s", "Time between frames (in seconds): ");
-	scanf("%lf", &delay_in_seconds);
+	printf("\nTime between frames (in seconds): ");
+	scanf("%d", &delay_in_seconds);
 
 	read_world(world_read, world_read_size, filename);
 
